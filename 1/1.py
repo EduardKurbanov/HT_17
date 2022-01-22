@@ -25,11 +25,11 @@ class WebScreenFormGoogle(object):
     _options.add_argument("--disable-dev-shm-usage")
     _options.add_argument("--no-sandbox")
     _driver = Chrome(options=_options)
+    _wait_s = WebDriverWait(self._driver, 10)
 
     def start_google_web(self):
-        self.wait_s = WebDriverWait(self._driver, 10)
         self._driver.get(url=self._url)
-        text_input = self.wait_s.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text']")))
+        text_input = self._wait_s.until(EC.element_to_be_clickable((By.XPATH, "//input[@type='text']")))
         text_input.clear()
         text_input.send_keys("Eduard")
         self._driver.save_screenshot("1.png")
