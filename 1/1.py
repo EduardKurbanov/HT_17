@@ -1,14 +1,3 @@
-"""
-Завдання: за допомогою браузера (Selenium) відкрити форму за наступним посиланням:
-https://docs.google.com/forms/d/e/1FAIpQLScLhHgD5pMnwxl8JyRfXXsJekF8_pDG36XtSEwaGsFdU2egyw/viewform?usp=sf_link
-заповнити і відправити її.
-Зберегти два скріншоти: заповненої форми і повідомлення про відправлення форми.
-В репозиторії скріншоти зберегти.
-Корисні посилання:
-https://www.selenium.dev/documentation/
-https://chromedriver.chromium.org/downloads
-"""
-
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,15 +6,19 @@ import time
 
 
 class WebScreenFormGoogle(object):
-    _url = 'https://docs.google.com/forms/d/e/1FAIpQLScLhHgD5pMnwxl8JyRfXXsJekF8_pDG36XtSEwaGsFdU2egyw/viewform?usp=sf_link'
-    _options = ChromeOptions()
-    _options.add_argument('--disable-notifications')
-    _options.add_argument("disable-infobars")
-    _options.add_argument("--disable-extensions")
-    _options.add_argument("--disable-dev-shm-usage")
-    _options.add_argument("--no-sandbox")
-    _driver = Chrome(options=_options)
-    _wait_s = WebDriverWait(self._driver, 10)
+    def __init__(self):
+        self._url = 'https://docs.google.com/forms/d/e/1FAIpQLScLhHgD5pMnwxl8JyRfXXsJekF8_pDG36XtSEwaGsFdU2egyw/viewform?usp=sf_link'
+        self._options = ChromeOptions()
+        self._options.add_argument('--disable-notifications')
+        self._options.add_argument("disable-infobars")
+        self._options.add_argument("--disable-extensions")
+        self._options.add_argument("--disable-dev-shm-usage")
+        self._options.add_argument("--no-sandbox")
+
+    def init_driver(self):
+        self._driver = Chrome(options=self._options)
+        self._wait_s = WebDriverWait(self._driver, 10)
+
 
     def start_google_web(self):
         self._driver.get(url=self._url)
@@ -47,13 +40,13 @@ class WebScreenFormGoogle(object):
 
 
 if __name__ in '__main__':
+    wd = WebScreenFormGoogle()
     try:
-        wd = WebScreenFormGoogle()
+        wd.init_driver()
         wd.start_google_web()
         wd.close_wd()
 
     except Exception as err:
         print(f"error -> {err}")
     finally:
-        wd = WebScreenFormGoogle()
         wd.quit_wb()
